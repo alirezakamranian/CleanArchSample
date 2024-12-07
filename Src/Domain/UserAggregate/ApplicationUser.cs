@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities
+namespace Domain.UserAggregate
 {
-    public class ApplicationUser:BaseEntity
+    public class ApplicationUser : BaseEntity
     {
         public string UserName { get; set; }
         public string PhoneNumber { get; set; }
