@@ -6,9 +6,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.ConfigureServices(builder);
 
+builder.Services.AddEndpoints();
+
 var app = builder.Build();
 
 //                                           HTTP request pipeline.
+app.MapEndpoints();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

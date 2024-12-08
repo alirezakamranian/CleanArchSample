@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,6 @@ namespace Domain.UserAggregate
     {
         public string UserName { get; set; }
         public string PhoneNumber { get; set; }
-        public int Role { get; set; }
+        public UserRoles Role { get; set; }
     }
 }
