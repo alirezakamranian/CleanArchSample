@@ -1,0 +1,51 @@
+﻿using Domain.Common;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Presentation.ExceptionHandlers
+{
+    public class GlobalExceptionHandler : IExceptionHandler
+    {
+        private readonly ILogger<GlobalExceptionHandler> _logger;
+
+        public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
+        {
+            _logger = logger;
+        }
+
+        public async ValueTask<bool> TryHandleAsync(
+             HttpContext httpContext,
+             Exception exception,
+             CancellationToken cancellationToken)
+        {
+            _logger.LogError("Exception occurred: {Message}", exception.Message);
+
+            ProblemDetails problemDetails = CreateProblemDetailFromException(exception);
+
+            httpContext.Response.StatusCode = problemDetails.Status!.Value;
+
+            await httpContext.Response
+                .WriteAsJsonAsync(problemDetails, cancellationToken);
+
+            return true;
+        }
+
+        private static ProblemDetails CreateProblemDetailFromException(Exception exception)
+        {
+            return exception is DomainException
+                ? new ProblemDetails
+                {
+                    Status = StatusCodes.Status400BadRequest,
+                    Title = "Bad Request",
+                    Detail = exception.Message
+                }
+                : new ProblemDetails
+                {
+                    Status = StatusCodes.Status500InternalServerError,
+                    Title = "Server error",
+                    Detail = "Server error"
+                };
+
+        }
+    }
+}

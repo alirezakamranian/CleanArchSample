@@ -13,6 +13,8 @@ var app = builder.Build();
 //                                           HTTP request pipeline.
 app.MapEndpoints();
 
+app.UseExceptionHandler();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
