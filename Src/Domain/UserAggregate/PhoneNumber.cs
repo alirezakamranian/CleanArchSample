@@ -8,37 +8,38 @@ using System.Threading.Tasks;
 
 namespace Domain.UserAggregate
 {
-    public class PhoneNumber : ValueObject
+    public sealed class PhoneNumber : ValueObject
     {
         private static readonly Regex MobileRegex = new Regex(@"^(\+98|0)?9\d{9}$", RegexOptions.Compiled);
 
-        public string Value { get; }
+        public string Value { get; set; }
 
-        private PhoneNumber(string value)
+        public PhoneNumber(string value)
         {
             Value = value;
         }
 
-        public static PhoneNumber Create(string mobileNumber)
+        public static PhoneNumber Create(string phoneNumber)
         {
-            if (string.IsNullOrWhiteSpace(mobileNumber))
+            if (string.IsNullOrWhiteSpace(phoneNumber))
                 throw new ArgumentException("Mobile number cannot be empty or null.");
 
-            mobileNumber = mobileNumber.Trim();
+            phoneNumber = phoneNumber.Trim();
 
-            if (!MobileRegex.IsMatch(mobileNumber))
+            if (!MobileRegex.IsMatch(phoneNumber))
                 throw new ArgumentException("Invalid mobile number format.");
 
-            if (!mobileNumber.StartsWith("+98"))
+            if (!phoneNumber.StartsWith("+98"))
             {
-                if (mobileNumber.StartsWith("0"))
-                    mobileNumber = "+98" + mobileNumber.Substring(1);
+                if (phoneNumber.StartsWith("0"))
+                    phoneNumber = string.Concat("+98", phoneNumber.AsSpan(1));
                 else
-                    mobileNumber = "+98" + mobileNumber;
+                    phoneNumber = "+98" + phoneNumber;
             }
 
-            return new PhoneNumber(mobileNumber);
+            return new PhoneNumber(phoneNumber);
         }
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             throw new NotImplementedException();

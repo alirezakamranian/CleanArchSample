@@ -16,18 +16,14 @@ namespace Application.User.CreateUser
         private readonly IDataContext _context = context;
         public async Task<CreateUserCommandResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            if (_context.Users.Any(u => 
+            if (_context.Users.Any(u =>
                 u.UserName.Equals(request.UserName.ToLower())))
                     throw new UserAlredyExistsException();
 
-            var user = new ApplicationUser()
-            {
-                PhoneNumber = request.Phone,
-                UserName = request.UserName.ToLower(),
-                Role = UserRoles.Basic
-            };
+            var user = new ApplicationUser(
+               request.UserName,  PhoneNumber.Create(request.Phone));
 
-            await _context.Users.AddAsync(user);
+            await _context.Users.AddAsync(user, cancellationToken);
 
             await _context.SaveChangesAsync(cancellationToken);
 
