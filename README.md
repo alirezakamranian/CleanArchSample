@@ -19,6 +19,7 @@
 <p>Asp.net Core 8</p>
 <p>Ef Core 8</p>
 <p>Minimal/Rest-ful Apis</p>
+<p>Argo2 Password hashing</p>
 
 <br>
 
