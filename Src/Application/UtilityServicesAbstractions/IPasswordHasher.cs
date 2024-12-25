@@ -8,7 +8,6 @@ namespace Application.UtilityServicesAbstractions
 {
     public interface IPasswordHasher
     {
-        byte[] GenerateSalt(int length);
         string HashPassword(string password, out string salt);
         bool VerifyPassword(string password, string hashedPassword, string salt);
     }

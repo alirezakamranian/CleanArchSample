@@ -10,7 +10,7 @@ namespace Presentation.User.CreateUser
     {
         public void MapEndpoint(IEndpointRouteBuilder app)
         {
-            app.MapPost("/user/login", async ([FromBody][Required]CreateUserRequest request, IMediator mediator, CancellationToken cancellationToken) =>
+            app.MapPost("/user/create", async ([FromBody][Required]CreateUserRequest request, IMediator mediator, CancellationToken cancellationToken) =>
             {
                 var command = new CreateUserCommand(
                     request.UserName, request.PhoneNumber, request.Password);

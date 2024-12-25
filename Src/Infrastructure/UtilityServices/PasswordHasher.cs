@@ -7,7 +7,7 @@ using Konscious.Security.Cryptography;
 
 namespace Infrastructure.UtilityServices
 {
-    public class PasswordHasher:IPasswordHasher
+    public class PasswordHasher : IPasswordHasher
     {
         public string HashPassword(string password, out string salt)
         {
@@ -20,7 +20,7 @@ namespace Infrastructure.UtilityServices
             argon2.Salt = saltBytes;
             argon2.DegreeOfParallelism = 8;
             argon2.MemorySize = 65536;
-            argon2.Iterations = 4;
+            argon2.Iterations = 10;
 
             byte[] hashBytes = argon2.GetBytes(32);
             return Convert.ToBase64String(hashBytes);
@@ -43,7 +43,7 @@ namespace Infrastructure.UtilityServices
             return newHash == hashedPassword;
         }
 
-        public byte[] GenerateSalt(int length)
+        private byte[] GenerateSalt(int length)
         {
             var salt = new byte[length];
 
@@ -51,7 +51,7 @@ namespace Infrastructure.UtilityServices
                 .RandomNumberGenerator.Create();
 
             rng.GetBytes(salt);
-            
+
             return salt;
         }
     }

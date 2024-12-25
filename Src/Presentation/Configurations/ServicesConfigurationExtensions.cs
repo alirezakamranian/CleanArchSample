@@ -29,7 +29,7 @@ namespace Presentation.Configurations
             services.AddDbContext<DataContext>(options =>
             options.UseSqlServer("Server=127.0.0.1;Database=CleanDb;User Id=SA;Password=12230500o90P;TrustServerCertificate=True"));
 
-            services.AddScoped<IDataContext>(provider => 
+            services.AddScoped<IDataContext>(provider =>
                 provider.GetRequiredService<DataContext>());
 
             //ExceptionHandling
@@ -38,6 +38,7 @@ namespace Presentation.Configurations
 
             //UtilityServices
             services.AddTransient<IPasswordHasher, PasswordHasher>();
+            services.AddTransient<IJwtTokenGenerator, JwtTokenGenerator>();
 
         }
 
@@ -46,8 +47,8 @@ namespace Presentation.Configurations
             var assembly = typeof(Presentation.IPresentationAssemblyMarker).Assembly;
 
             ServiceDescriptor[] serviceDescriptors = assembly.DefinedTypes.Where(
-                type => type is { IsAbstract: false, IsInterface: false } 
-                    &&type.IsAssignableTo(typeof(IEndpoint))).Select(type =>
+                type => type is { IsAbstract: false, IsInterface: false }
+                    && type.IsAssignableTo(typeof(IEndpoint))).Select(type =>
                         ServiceDescriptor.Transient(typeof(IEndpoint), type)).ToArray();
 
             services.TryAddEnumerable(serviceDescriptors);

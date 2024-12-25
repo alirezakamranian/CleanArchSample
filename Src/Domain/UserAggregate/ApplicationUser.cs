@@ -27,6 +27,8 @@ namespace Domain.UserAggregate
         public string PasswordHash { get; private set; }
         public string HashSalt { get; set; }
 
+        public UserRefreshToken RefreshToken { get; set; }
+
         public void UpdateRole(UserRoles role) =>
             Role = role;
 
