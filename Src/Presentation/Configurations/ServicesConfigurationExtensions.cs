@@ -1,5 +1,7 @@
 ﻿using Application.Common.Abstractions;
+using Application.UtilityServicesAbstractions;
 using Infrastructure.DataAccess;
+using Infrastructure.UtilityServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Presentation.Abstractions;
@@ -33,6 +35,9 @@ namespace Presentation.Configurations
             //ExceptionHandling
             builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
             builder.Services.AddProblemDetails();
+
+            //UtilityServices
+            services.AddTransient<IPasswordHasher, PasswordHasher>();
 
         }
 

@@ -1,4 +1,4 @@
 ﻿namespace Presentation.User.CreateUser
 {
-    public record CreateUserRequest(string UserName,string PhoneNumber);
+    public record CreateUserRequest(string UserName,string PhoneNumber,string Password);
 }

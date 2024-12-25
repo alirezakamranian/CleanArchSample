@@ -10,10 +10,11 @@ namespace Domain.UserAggregate
 {
     public sealed class PhoneNumber : ValueObject
     {
-        private static readonly Regex MobileRegex = new Regex(@"^(\+98|0)?9\d{9}$", RegexOptions.Compiled);
+        private static readonly Regex MobileRegex = new(@"^(\+98|0)?9\d{9}$", RegexOptions.Compiled);
 
-        public string Value { get; set; }
+        public string Value { get; private set; }
 
+        private PhoneNumber() { }
         public PhoneNumber(string value)
         {
             Value = value;
