@@ -1,4 +1,5 @@
-﻿using Domain.UserAggregate;
+﻿using Domain.ArticleAggregate;
+using Domain.UserAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -10,10 +11,11 @@ using System.Threading.Tasks;
 
 namespace Application.Common.Abstractions
 {
-    public interface IDataContext 
+    public interface IDataContext
     {
         public DbSet<UserRefreshToken> RefreshTokens { get; set; }
         public DbSet<ApplicationUser> Users { get; set; }
+        public DbSet<Article> Articles { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 

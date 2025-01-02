@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Constants
+namespace Domain.Common.Constants
 {
     public enum UserRoles
     {

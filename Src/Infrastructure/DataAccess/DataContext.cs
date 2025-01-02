@@ -1,4 +1,5 @@
 ﻿using Application.Common.Abstractions;
+using Domain.ArticleAggregate;
 using Domain.UserAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -14,6 +15,7 @@ namespace Infrastructure.DataAccess
     {
         public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<UserRefreshToken> RefreshTokens { get; set; }
+        public DbSet<Article> Articles { get ; set ; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

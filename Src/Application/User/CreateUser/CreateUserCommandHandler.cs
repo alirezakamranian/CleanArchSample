@@ -1,6 +1,6 @@
 ﻿using Application.Common.Abstractions;
 using Application.UtilityServicesAbstractions;
-using Domain.Constants;
+using Domain.Common.Constants;
 using Domain.UserAggregate;
 using MediatR;
 using System;

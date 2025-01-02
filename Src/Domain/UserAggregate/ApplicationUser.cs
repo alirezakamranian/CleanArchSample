@@ -1,5 +1,6 @@
-﻿using Domain.Common;
-using Domain.Constants;
+﻿using Domain.ArticleAggregate;
+using Domain.Common;
+using Domain.Common.Constants;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -28,6 +29,7 @@ namespace Domain.UserAggregate
         public string HashSalt { get; set; }
 
         public UserRefreshToken RefreshToken { get; set; }
+        public List<Article> Articles{ get; set; }
 
         public void UpdateRole(UserRoles role) =>
             Role = role;
