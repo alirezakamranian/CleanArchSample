@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Common
+namespace Application.ArticleUsecases.CreateArticle
 {
-    public class DomainException(string Message):Exception(message:Message);
+    public record CreateArticleCommandResponse(string ArticleId);
+
 }

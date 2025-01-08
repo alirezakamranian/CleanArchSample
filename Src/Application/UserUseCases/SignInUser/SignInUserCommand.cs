@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.User.SignInUser
+namespace Application.UserUsecases.SignInUser
 {
     public record SignInUserCommand(string UserName,string Password):IRequest<SignInUserCommandResponse>;
 }

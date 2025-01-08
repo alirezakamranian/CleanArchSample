@@ -1,4 +1,4 @@
-﻿using Application.User.SignInUser;
+﻿using Application.UserUsecases.SignInUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Abstractions;

@@ -12,34 +12,30 @@ namespace Domain.UserAggregate
     {
         private static readonly Regex MobileRegex = new(@"^(\+98|0)?9\d{9}$", RegexOptions.Compiled);
 
-        public string Value { get; private set; }
+        public string Value { get; set; }
 
-        private PhoneNumber() { }
+        public PhoneNumber() { }
         public PhoneNumber(string value)
         {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Mobile number cannot be empty or null.");
+
+            value = value.Trim();
+
+            if (!MobileRegex.IsMatch(value))
+                throw new ArgumentException("Invalid mobile number format.");
+
+            if (!value.StartsWith("+98"))
+            {
+                if (value.StartsWith("0"))
+                    value = string.Concat("+98", value.AsSpan(1));
+                else
+                    value = "+98" + value;
+            }
             Value = value;
         }
 
-        public static PhoneNumber Create(string phoneNumber)
-        {
-            if (string.IsNullOrWhiteSpace(phoneNumber))
-                throw new ArgumentException("Mobile number cannot be empty or null.");
-
-            phoneNumber = phoneNumber.Trim();
-
-            if (!MobileRegex.IsMatch(phoneNumber))
-                throw new ArgumentException("Invalid mobile number format.");
-
-            if (!phoneNumber.StartsWith("+98"))
-            {
-                if (phoneNumber.StartsWith("0"))
-                    phoneNumber = string.Concat("+98", phoneNumber.AsSpan(1));
-                else
-                    phoneNumber = "+98" + phoneNumber;
-            }
-
-            return new PhoneNumber(phoneNumber);
-        }
+        public static PhoneNumber Create() => new();
 
         protected override IEnumerable<object> GetEqualityComponents()
         {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.User.CreateUser
+namespace Application.UserUsecases.CreateUser
 {
     public record CreateUserCommandResponse(string Id);
 }

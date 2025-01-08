@@ -11,7 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.User.SignInUser
+namespace Application.UserUsecases.SignInUser
 {
     public class SignInUserCommandHandler(IDataContext context, IPasswordHasher passwordHasher,
         IJwtTokenGenerator jwtTokenGenerator) : IRequestHandler<SignInUserCommand, SignInUserCommandResponse>

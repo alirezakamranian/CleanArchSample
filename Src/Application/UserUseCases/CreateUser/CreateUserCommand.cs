@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.User.CreateUser
+namespace Application.UserUsecases.CreateUser
 {
     public record CreateUserCommand(string UserName, string Phone, string Password) : IRequest<CreateUserCommandResponse>;
 }

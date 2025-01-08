@@ -10,7 +10,7 @@ namespace Domain.ArticleAggregate
 {
     public class Article
     {
-        private Article() { }
+        public Article() { }
         public Article(string title, string content, Guid userId)
         {
             if (string.IsNullOrWhiteSpace(title))
@@ -25,13 +25,15 @@ namespace Domain.ArticleAggregate
             CreatedAt = DateTime.UtcNow;
         }
 
-        public Guid Id { get; private set; }
-        public string Title { get; private set; }
-        public string Content { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-        public Guid UserId { get; private set; }
+        public Guid Id { get; set; }
+        public string Title { get; set; } 
+        public string Content { get; set; } 
+        public DateTime CreatedAt { get; set; }
 
-        public ApplicationUser User { get; set; }
+        //UserRel
+        public Guid UserId { get; set; }
+        public ApplicationUser User { get; set; } = new();
+
         public void UpdateTitle(string title) => Title = title;
         public void UpdateContent(string content) => Content = content;
     }

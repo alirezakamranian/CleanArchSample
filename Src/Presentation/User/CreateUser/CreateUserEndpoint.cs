@@ -1,4 +1,4 @@
-﻿using Application.User.CreateUser;
+﻿using Application.UserUsecases.CreateUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Abstractions;
