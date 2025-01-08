@@ -4,12 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Common.Constants
+namespace Domain.Common.Exceptions
 {
-    public enum UserRoles
-    {
-        Basic,
-        Author,
-        Admin
-    }
+    public class AccessDeniedException() : DomainException("AccessDenied");
 }

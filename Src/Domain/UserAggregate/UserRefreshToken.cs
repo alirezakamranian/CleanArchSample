@@ -8,7 +8,7 @@ namespace Domain.UserAggregate
 {
     public class UserRefreshToken
     {
-        private UserRefreshToken() { }
+        public UserRefreshToken() { }
         public UserRefreshToken(string refreshToken,Guid id)
         {
             Id=id;
@@ -18,8 +18,10 @@ namespace Domain.UserAggregate
         }
 
         public Guid Id { get; set; }
-        public string RefreshToken { get; set; }
+        public string RefreshToken { get; set; } 
         public DateTime ExpireDate { get; set; }
-        public ApplicationUser User { get; set; }
+        public ApplicationUser User { get; set; } 
+
+        public static UserRefreshToken Create() => new();
     }
 }

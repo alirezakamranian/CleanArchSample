@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.User.CreateUser
+namespace Application.UserUsecases.CreateUser
 {
     public class CreateUserCommandHandler(
         IDataContext context, IPasswordHasher passwordHasher) : IRequestHandler<CreateUserCommand, CreateUserCommandResponse>
@@ -24,7 +24,7 @@ namespace Application.User.CreateUser
                 throw new UserAlredyExistsException();
 
             var user = new ApplicationUser(
-               request.UserName, PhoneNumber.Create(request.Phone),
+               request.UserName, new PhoneNumber(request.Phone),
                 _passwordHasher.HashPassword(request.Password, out hashSalt), hashSalt);
 
             await _context.Users.AddAsync(user, cancellationToken);

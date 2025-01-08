@@ -2,6 +2,7 @@
 using Domain.UserAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Application;
 using System;
 using System.Collections.Generic;
 using System.Linq;

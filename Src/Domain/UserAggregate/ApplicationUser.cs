@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace Domain.UserAggregate
 {
     public class ApplicationUser : BaseEntity
     {
-        private ApplicationUser() { }
+        public ApplicationUser() { }
         public ApplicationUser(string userName, PhoneNumber phoneNumber, string passwordHash, string hashSalt)
         {
             UserName = userName ?? throw new ArgumentNullException(nameof(UserName));
@@ -22,14 +23,14 @@ namespace Domain.UserAggregate
             Role = UserRoles.Basic;
         }
 
-        public string UserName { get; private set; }
-        public PhoneNumber PhoneNumber { get; private set; }
-        public UserRoles Role { get; private set; }
-        public string PasswordHash { get; private set; }
+        public string UserName { get; set; } 
+        public PhoneNumber PhoneNumber { get; set; }
+        public UserRoles Role { get; set; }
+        public string PasswordHash { get; set; } 
         public string HashSalt { get; set; }
 
-        public UserRefreshToken RefreshToken { get; set; }
-        public List<Article> Articles{ get; set; }
+        public UserRefreshToken RefreshToken { get; set; } 
+        public List<Article> Articles { get; set; } = [];
 
         public void UpdateRole(UserRoles role) =>
             Role = role;

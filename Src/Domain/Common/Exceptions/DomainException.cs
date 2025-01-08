@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.User.SignInUser
+namespace Domain.Common.Exceptions
 {
-    public record SignInUserCommandResponse(string AccessToken,string RefreshToken);
+    public class DomainException(string Message) : Exception(message: Message);
 }
