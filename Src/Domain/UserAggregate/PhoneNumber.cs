@@ -12,9 +12,9 @@ namespace Domain.UserAggregate
     {
         private static readonly Regex MobileRegex = new(@"^(\+98|0)?9\d{9}$", RegexOptions.Compiled);
 
-        public string Value { get; set; }
+        public string Value { get; private set; }
 
-        public PhoneNumber() { }
+        private PhoneNumber() { }
         public PhoneNumber(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
