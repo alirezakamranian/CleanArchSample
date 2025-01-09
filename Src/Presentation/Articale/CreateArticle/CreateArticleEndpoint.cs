@@ -17,7 +17,7 @@ namespace Presentation.Articale.CreateArticle
     {
         public void MapEndpoint(IEndpointRouteBuilder app)
         {
-            app.MapPost("/article/create", async ([FromBody][Required] CreateArticleRequest request, IMediator mediator, HttpContext httpContext, CancellationToken cancellationToken) =>
+            app.MapPost("/article/create", async ([FromBody][Required] GetArticlesRequest request, IMediator mediator, HttpContext httpContext, CancellationToken cancellationToken) =>
             {
                 var userId = httpContext.User.Claims
                     .FirstOrDefault(c => c.Type.Equals("Id")).Value;

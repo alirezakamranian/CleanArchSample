@@ -3,5 +3,5 @@ using System.Security.Claims;
 
 namespace Presentation.Articale.CreateArticle
 {
-    public record CreateArticleRequest([Required]string Title,string Content);
+    public record GetArticlesRequest([Required]string Title,string Content);
 }
