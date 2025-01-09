@@ -23,14 +23,14 @@ namespace Domain.UserAggregate
             Role = UserRoles.Basic;
         }
 
-        public string UserName { get; set; } 
-        public PhoneNumber PhoneNumber { get; set; }
-        public UserRoles Role { get; set; }
-        public string PasswordHash { get; set; } 
-        public string HashSalt { get; set; }
+        public string UserName { get; private set; } 
+        public PhoneNumber PhoneNumber { get; private set; }
+        public UserRoles Role { get; private set; }
+        public string PasswordHash { get; private set; } 
+        public string HashSalt { get; private set; }
 
-        public UserRefreshToken RefreshToken { get; set; } 
-        public List<Article> Articles { get; set; } = [];
+        public UserRefreshToken RefreshToken { get; private set; } 
+        public List<Article> Articles { get; private set; } = [];
 
         public void UpdateRole(UserRoles role) =>
             Role = role;

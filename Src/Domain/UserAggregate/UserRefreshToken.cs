@@ -8,19 +8,19 @@ namespace Domain.UserAggregate
 {
     public class UserRefreshToken
     {
-        public UserRefreshToken() { }
-        public UserRefreshToken(string refreshToken,Guid id)
+        private UserRefreshToken() { }
+        public UserRefreshToken(string refreshToken, Guid id)
         {
-            Id=id;
+            Id = id;
             RefreshToken = refreshToken ?? throw new ArgumentNullException(nameof(RefreshToken));
             ExpireDate = DateTime.UtcNow.AddDays(10);
 
         }
 
-        public Guid Id { get; set; }
-        public string RefreshToken { get; set; } 
-        public DateTime ExpireDate { get; set; }
-        public ApplicationUser User { get; set; } 
+        public Guid Id { get; private set; }
+        public string RefreshToken { get; private set; }
+        public DateTime ExpireDate { get; private set; }
+        public ApplicationUser User { get; private set; }
 
         public static UserRefreshToken Create() => new();
     }

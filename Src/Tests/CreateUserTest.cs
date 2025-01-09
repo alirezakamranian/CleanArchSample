@@ -1,5 +1,4 @@
-﻿using Application.User.CreateUser;
-using Infrastructure.DataAccess;
+﻿using Infrastructure.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Application.UtilityServicesAbstractions;
+using Application.UserUsecases.CreateUser;
 namespace Tests
 {
     public class CreateUserTest
