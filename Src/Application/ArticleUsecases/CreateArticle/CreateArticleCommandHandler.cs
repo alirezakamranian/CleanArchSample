@@ -23,7 +23,7 @@ namespace Application.ArticleUsecases.CreateArticle
 
         public async Task<CreateArticleCommandResponse> Handle(CreateArticleCommand request, CancellationToken cancellationToken)
         {
-            var authorizationResult = await authorizationService
+            var authorizationResult = await _authorizationService
                 .AuthorizeAsync(request.User, Article.Create(), ArticleAuthorizationRequirements.CreateRequirement);
 
             if (!authorizationResult.Succeeded)
