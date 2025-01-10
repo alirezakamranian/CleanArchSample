@@ -38,7 +38,7 @@ namespace Presentation.Articale.GetArticles
                     response.Articles.TotalPages);
 
                 return Results.Ok(finalResponse);
-            }).WithName("GetAllArticles").WithOpenApi();
+            }).WithName("GetAllArticles").WithOpenApi().RequireRateLimiting("FixedForGet");
         }
     }
 }

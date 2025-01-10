@@ -5,6 +5,7 @@ using Infrastructure.DataAccess;
 using Infrastructure.UtilityServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
@@ -12,6 +13,7 @@ using Microsoft.OpenApi.Models;
 using Presentation.Abstractions;
 using Presentation.ExceptionHandlers;
 using System.Text;
+using System.Threading.RateLimiting;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Presentation.Configurations
@@ -20,12 +22,7 @@ namespace Presentation.Configurations
     {
         public static void ConfigureServices(this IServiceCollection services, WebApplicationBuilder builder)
         {
-            //MediatR
-            services.AddMediatR(Config =>
-            {
-                Config.RegisterServicesFromAssembly(typeof(
-                    Application.IApplicationAssemblyMarker).Assembly);
-            });
+                                                                     //Asp.net core services
 
             //Auth
             builder.Services.AddAuthentication(options =>
@@ -93,6 +90,51 @@ namespace Presentation.Configurations
             builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
             builder.Services.AddProblemDetails();
 
+            // Configure rate limiting
+            builder.Services.AddRateLimiter(options =>
+            {
+                options.AddFixedWindowLimiter("FixedForCreate", opt =>
+                {
+                    opt.Window = TimeSpan.FromMinutes(1);    
+                    opt.PermitLimit = 2;                   
+                    opt.QueueLimit = 0;                      
+                    opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                });
+
+                options.AddFixedWindowLimiter("FixedForGet", opt =>
+                {
+                    opt.Window = TimeSpan.FromMinutes(1);
+                    opt.PermitLimit = 5;
+                    opt.QueueLimit = 0;
+                    opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                });
+
+                options.AddFixedWindowLimiter("FixedForUserRegister", opt =>
+                {
+                    opt.Window = TimeSpan.FromHours(1);
+                    opt.PermitLimit = 1;
+                    opt.QueueLimit = 0;
+                    opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                });
+
+                options.OnRejected = async (onRejectedContext, cancellationToken) =>
+                {
+                    onRejectedContext.HttpContext.Response.StatusCode = 429;
+                    onRejectedContext.HttpContext.Response.ContentType = "text/plain";
+                    await onRejectedContext.HttpContext.Response.WriteAsync("Too many requests. Please try again later", cancellationToken);
+                };
+            });
+
+
+            //InternalServices
+
+            //MediatR
+            services.AddMediatR(Config =>
+            {
+                Config.RegisterServicesFromAssembly(typeof(
+                    Application.IApplicationAssemblyMarker).Assembly);
+            });
+
             //UtilityServices
             services.AddTransient<IPasswordHasher, PasswordHasher>();
             services.AddTransient<IJwtTokenGenerator, JwtTokenGenerator>();
@@ -102,6 +144,7 @@ namespace Presentation.Configurations
             builder.Services.AddTransient<IAuthorizationHandler, ArticleAuthorizationHandler>();
         }
 
+        //EnpointsConfiguration
         public static IServiceCollection AddEndpoints(this IServiceCollection services)
         {
             var assembly = typeof(Presentation.IPresentationAssemblyMarker).Assembly;

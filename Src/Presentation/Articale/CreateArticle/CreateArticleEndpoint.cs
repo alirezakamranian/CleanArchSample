@@ -29,7 +29,7 @@ namespace Presentation.Articale.CreateArticle
                     .Send(command, cancellationToken);
 
                 return Results.Ok(response);
-            }).WithName("CreateArticle").WithOpenApi().RequireAuthorization();
+            }).WithName("CreateArticle").WithOpenApi().RequireAuthorization().RequireRateLimiting("FixedForCreate");
         }
     }
 }
