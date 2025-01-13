@@ -1,4 +1,5 @@
 ﻿using Application.UserUsecases.SignInUser;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Abstractions;
@@ -11,8 +12,10 @@ namespace Presentation.User.SignInUser
     {
         public void MapEndpoint(IEndpointRouteBuilder app)
         {
-            app.MapPost("/user/signin", async ([FromBody][Required] SignInUserRequest request, IMediator mediator, CancellationToken cancellationToken) =>
+            app.MapPost("/user/signin", async ([FromBody][Required] SignInUserRequest request, IMediator mediator, IValidator<SignInUserRequest> validator, CancellationToken cancellationToken) =>
             {
+                await validator.ValidateAndThrowAsync(request, cancellationToken);
+
                 var command = new SignInUserCommand(request.UserName,request.Password);
 
                 var response = await mediator
