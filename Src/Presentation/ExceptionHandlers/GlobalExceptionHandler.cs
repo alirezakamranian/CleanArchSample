@@ -1,6 +1,7 @@
 ﻿using Domain.Common.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using FluentValidation;
 
 namespace Presentation.ExceptionHandlers
 {
@@ -21,10 +22,10 @@ namespace Presentation.ExceptionHandlers
 
             ProblemDetails problemDetails = CreateProblemDetailFromException(exception);
 
-            if(problemDetails.Status.Value.Equals(500))
+            if (problemDetails.Status.Value.Equals(500))
                 _logger.LogError("Exception occurred: {Message}", exception.Message);
             else
-            _logger.LogCritical("Exception occurred: {Message}", exception.Message);
+                _logger.LogCritical("Exception occurred: {Message}", exception.Message);
 
             httpContext.Response.StatusCode = problemDetails.Status!.Value;
 
@@ -43,7 +44,7 @@ namespace Presentation.ExceptionHandlers
                         return new ProblemDetails
                         {
                             Status = StatusCodes.Status403Forbidden,
-                            Title = "Access Denied",
+                            Title = "AccessDenied",
                             Detail = exception.Message
                         };
                     }
@@ -53,18 +54,28 @@ namespace Presentation.ExceptionHandlers
                         return new ProblemDetails
                         {
                             Status = StatusCodes.Status400BadRequest,
-                            Title = "Bad Request",
+                            Title = "BadRequest",
+                            Detail = exception.Message
+                        };
+                    }
+
+                case ValidationException:
+                    {
+                        return new ProblemDetails
+                        {
+                            Status = StatusCodes.Status400BadRequest,
+                            Title = "InvalidInputParameters",
                             Detail = exception.Message
                         };
                     }
 
                 case not DomainException:
-                    { 
+                    {
                         return new ProblemDetails
                         {
                             Status = StatusCodes.Status500InternalServerError,
-                            Title = "Server error",
-                            Detail = "Server error"
+                            Title = "ServerError",
+                            Detail = "ServerError"
                         };
                     }
             }

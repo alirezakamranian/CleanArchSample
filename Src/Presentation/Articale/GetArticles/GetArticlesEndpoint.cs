@@ -1,5 +1,6 @@
 ﻿using Application.ArticleUsecases.GetArticles;
 using Application.Common.Models;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Abstractions;
@@ -12,8 +13,12 @@ namespace Presentation.Articale.GetArticles
     {
         public void MapEndpoint(IEndpointRouteBuilder app)
         {
-            app.MapGet("/article/getall", async ([FromQuery]int pageSize, [FromQuery] int pageIndex, IMediator mediator, CancellationToken cancellationToken) =>
+            app.MapGet("/article/getall", async ([FromQuery] int pageSize, [FromQuery] int pageIndex, IMediator mediator, IValidator<GetArticleRequest> validator, CancellationToken cancellationToken) =>
             {
+                var request = new GetArticleRequest(pageSize,pageIndex);
+
+                await validator.ValidateAndThrowAsync(request, cancellationToken);
+
                 var command = new GetArticlesQuery(
                     pageSize, pageIndex);
 

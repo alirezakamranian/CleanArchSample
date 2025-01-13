@@ -35,7 +35,7 @@ namespace Infrastructure.UtilityServices
             argon2.Salt = saltBytes;
             argon2.DegreeOfParallelism = 8;
             argon2.MemorySize = 65536;
-            argon2.Iterations = 4;
+            argon2.Iterations = 10;
 
             byte[] hashBytes = argon2.GetBytes(32);
             string newHash = Convert.ToBase64String(hashBytes);

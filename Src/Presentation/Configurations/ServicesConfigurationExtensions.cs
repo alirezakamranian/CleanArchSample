@@ -1,6 +1,7 @@
 ﻿using Application.ArticleUsecases.AuthorizationProfie;
 using Application.Common.Abstractions;
 using Application.UtilityServicesAbstractions;
+using FluentValidation;
 using Infrastructure.DataAccess;
 using Infrastructure.UtilityServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -22,7 +23,7 @@ namespace Presentation.Configurations
     {
         public static void ConfigureServices(this IServiceCollection services, WebApplicationBuilder builder)
         {
-                                                                     //Asp.net core services
+            //                                          Asp.net core services & third party packages
 
             //Auth
             builder.Services.AddAuthentication(options =>
@@ -95,9 +96,9 @@ namespace Presentation.Configurations
             {
                 options.AddFixedWindowLimiter("FixedForCreate", opt =>
                 {
-                    opt.Window = TimeSpan.FromMinutes(1);    
-                    opt.PermitLimit = 2;                   
-                    opt.QueueLimit = 0;                      
+                    opt.Window = TimeSpan.FromMinutes(1);
+                    opt.PermitLimit = 2;
+                    opt.QueueLimit = 0;
                     opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
                 });
 
@@ -125,8 +126,11 @@ namespace Presentation.Configurations
                 };
             });
 
+            //FluentValidation
+            services.AddValidatorsFromAssembly(typeof(
+                IPresentationAssemblyMarker).Assembly);
 
-            //InternalServices
+            //                                                      InternalServices
 
             //MediatR
             services.AddMediatR(Config =>
