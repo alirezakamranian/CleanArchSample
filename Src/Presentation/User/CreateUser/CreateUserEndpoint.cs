@@ -22,7 +22,7 @@ namespace Presentation.User.CreateUser
                     .Send(command, cancellationToken);
 
                 return response;
-            }).WithName("CreateUser").WithOpenApi().RequireRateLimiting("FixedForUserRegister");
+            }).WithName("CreateUser").WithTags("User").WithOpenApi().RequireRateLimiting("FixedForUserRegister");
         }
     }
 }

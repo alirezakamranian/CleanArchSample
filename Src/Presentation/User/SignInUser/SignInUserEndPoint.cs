@@ -22,7 +22,7 @@ namespace Presentation.User.SignInUser
                 .Send(command, cancellationToken);
 
                 return response;
-            }).WithName("SignInUser").WithOpenApi();
+            }).WithName("SignInUser").WithTags("User").WithOpenApi();
         }
     }
 }
