@@ -15,11 +15,12 @@
 <hr>
 
 <h3>Used Tecnologies :</h3>
-<p>.Net 8</p>
-<p>Asp.net Core 8</p>
-<p>Ef Core 8</p>
-<p>Minimal/Rest-ful Apis</p>
-<p>Argo2 Password hashing</p>
+<p>🟣.Net 8</p>
+<p>🟣Asp.net Core 8</p>
+<p>🟣Ef Core 8</p>
+<p>🟣Minimal/Rest-ful Apis</p>
+<p>🟣Argon Password hashing</p>
+<p>🟣Jwt Auth (All token creation and presentation logic is developed in the project itself and does not depend on a specific library such as aspnetcore identity)</p>
 
 <br>
 
